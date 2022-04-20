@@ -182,7 +182,7 @@ h2 {
 
 .question-container {
     background-color: white;
-    margin: 4% 20%;
+    margin: 70px 20%;
     padding: 30px;
 }
 
@@ -216,5 +216,9 @@ h2 {
 @media screen and (max-width: 1100px) {
     main {
         padding: 70px 0;
+    }
+
+    .question-container {
+        margin: 40px 0%;
     }
 }

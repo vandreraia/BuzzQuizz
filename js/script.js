@@ -38,6 +38,7 @@ function showquizz(id) {
 function postQuizz(response) {
     const quizz = response.data;
     let el;
+    let str = "";
     el = document.querySelector(".titulo");
     el.innerHTML = `
     <img src="${quizz.image}" />
@@ -46,28 +47,30 @@ function postQuizz(response) {
     </div>`;
     test = quizz;
     el = document.querySelector(".question-container");
-    el2 = document.querySelector(".respostas");
     el.innerHTML = "";
 
     for (let i = 0; i < quizz.questions.length; i++) {
-        el.innerHTML += `
+        str += `
         <div style="background-color:${quizz.questions[i].color};" class="pergunta flex-center">
             ${quizz.questions[i].title}
         </div>
-        <div class="respostas flex-center">`;
+        <div class="respostas flex-center">
+        `;
         quizz.questions[i].answers.sort(randomizador);
         for (let j = 0; j < quizz.questions[i].answers.length; j++) {
-            el.innerHTML += `
-            <div id="${quizz.questions[i].answers[j].isCorrectAnswer}" class="resposta" onclick="checkResposta(this.id)">
+            str += `
+            <div id="${quizz.questions[i].answers[j].isCorrectAnswer}" class="resposta" onclick="checkResposta(this)">
                 <img src="${quizz.questions[i].answers[j].image}" />
                 <p>${quizz.questions[i].answers[j].text}</p>
             </div>`;
         }
-        el.innerHTML += `</div>`;
+        str += `</div>`;
     }
+    el.innerHTML = str;
 }
 
 function checkResposta(id) {
+    test = id;
     console.log(id)
 }
 
