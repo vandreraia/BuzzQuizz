@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>BuzzQuizz</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
@@ -48,8 +50,21 @@
             <button onclick="home()">Voltar pra home</button>
         </div>
     </main>
+    
+    <!-- Informações básicas do Quizz -->
+    <div class="info-quizz">
+        <h2>Informações básicas do seu Quizz</h2>
+        <div class="container">
+            <input type="text" class="titulo" placeholder="Título do seu quizz">
+            <input type="text" class="url-image" placeholder="URL da imagem do seu quizz">
+            <input type="text" class="num-perguntas" placeholder="Quantidades de Perguntas do quizz">
+            <input type="text" class="num-quizz" placeholder="Quantidade de níveis do quizz">
+        </div>
+        <div class="button">Prosseguir para criar perguntas</div>
+    </div>
+    
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="script.js"></script>
+    <script src="js/script.js"></script>
 </body>
 
 </html>
