@@ -14,34 +14,43 @@
         BuzzQuizz
     </header>
     <main>
-        <div class="user-quizz">
-            <div>
-                <span>Você não criou nenhum quizz ainda :(</span>
+        <!-- Tela 1 - Lista de Quizzes -->
+        <div class="quizzez-list">
+            <div class="user-quizzez flex-center">
+                <div>
+                    Você não criou nenhum quizz ainda :(
+                </div>
+                <button>Criar Quizz</button>
             </div>
-            <button>Criar Quizz</button>
+            <h3>Todos os Quizzes</h3>
+            <div class="todos-quizzes flex-center">
+                <div onclick="showquizz(this)" class="quizz">
+                    <img src="/Rectangle 36.png" />
+                    <div>
+                        <p>Acerte os personagens corretos dos Simpsons e prove seu amor!</p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <h3>Todos os Quizzes</h3>
-        <div class="todos-quizzes">
-            <div class="quizz">
-                <p>Acerte os personagens corretos dos Simpsons e prove seu amor!</p>
+        <!-- Tela 2 - Página de um quizz -->
+        <div class="quizz-page hide">
+            <div class="titulo">
+                <img src="/Rectangle 36.png" />
+                <div>
+                    <p>O quão Potterhead é você?</p>
+                </div>
             </div>
-            <div class="quizz qui">
-                <p>O quanto você é de boas?</p>
+            <div class="question-container">
+                <div class="respostas flex-center">
+                    
+                </div>
             </div>
-            <div class="quizz">
-                <p>Acerte os personagens corretos dos Simpsons e prove seu amor!</p>
-            </div>
-            <div class="quizz">
-                <p>Acerte os personagens corretos dos Simpsons e prove seu amor!</p>
-            </div>
-            <div class="quizz qui">
-                <p>O quanto você é de boas?</p>
-            </div>
-            <div class="quizz">
-                <p>Acerte os personagens corretos dos Simpsons e prove seu amor!</p>
-            </div>
+            <button onclick="home()">Voltar pra home</button>
         </div>
     </main>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>
+
