@@ -49,12 +49,12 @@
     <div class="info-quizz">
         <h2>Informações básicas do seu Quizz</h2>
         <div class="container">
-            <input type="text" class="titulo" placeholder="Título do seu quizz">
-            <input type="text" class="url-image" placeholder="URL da imagem do seu quizz">
-            <input type="text" class="num-perguntas" placeholder="Quantidades de Perguntas do quizz">
-            <input type="text" class="num-quizz" placeholder="Quantidade de níveis do quizz">
+            <input type="text" class="titulo" id="titulo" placeholder="Título do seu quizz" minlength="20" maxlength="65">
+            <input type="url" class="url-image" id="url-image"  placeholder="URL da imagem do seu quizz">
+            <input type="number" class="num-perguntas" id="num-perguntas" placeholder="Quantidades de Perguntas do quizz">
+            <input type="number" class="num-quizz" id="num-quizz" placeholder="Quantidade de níveis do quizz">
         </div>
-        <div class="button">Prosseguir para criar perguntas</div>
+        <div class="button" onclick="validaInput(), restricaoNumeros()">Prosseguir para criar perguntas</div>
     </div>
 
     <script src="js/script.js"></script>
