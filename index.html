@@ -15,14 +15,15 @@
     <header>
         BuzzQuizz
     </header>
-    <main>
+    <main class="main">
         <!-- Tela 1 - Lista de Quizzes -->
         <div class="quizzez-list">
             <div class="user-quizzez flex-center">
                 <div>
                     Você não criou nenhum quizz ainda :(
                 </div>
-                <button>Criar Quizz</button>
+                <button id="criar-quizz" onclick="criarQuizz()">Criar Quizz</button>
+                <ion-icon class="hide" name="add-circle"></ion-icon>
             </div>
             <h3>Todos os Quizzes</h3>
             <div class="todos-quizzes flex-center">
@@ -47,12 +48,12 @@
                     
                 </div>
             </div>
-            <button onclick="home()">Voltar pra home</button>
+            <button onclick="home()">Voltar pra home</button> 
         </div>
     </main>
     
-    <!-- Informações básicas do Quizz -->
-    <div class="info-quizz">
+    <!-- Informações básicas do Quizz - TELA DESKTOP 8 -->
+    <div class="info-quizz flex-center hide">
         <h2>Informações básicas do seu Quizz</h2>
         <div class="container">
             <input type="text" class="titulo" id="titulo" placeholder="Título do seu quizz" minlength="20" maxlength="65">
@@ -60,10 +61,20 @@
             <input type="number" class="num-perguntas" id="num-perguntas" placeholder="Quantidades de Perguntas do quizz">
             <input type="number" class="num-quizz" id="num-quizz" placeholder="Quantidade de níveis do quizz">
         </div>
-        <div class="button" onclick="validaInput(), restricaoNumeros()">Prosseguir para criar perguntas</div>
+        <div class="button" onclick="validacao()">Prosseguir para criar perguntas</div>
+    </div>
+
+    <!-- Construindo o quizz - Tela Desktop 9 -->
+    <div class="build-quizz flex-center ">
+        <h2>Crie suas perguntas</h2>
+        <div class="container-pergunta">
+        </div>
+        <div class="button">Prosseguir pra criar níveis</div>
     </div>
     
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script src="js/script.js"></script>
 </body>
 

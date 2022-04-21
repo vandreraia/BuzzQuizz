@@ -1,70 +1,125 @@
 const API = "https://mock-api.driven.com.br/api/v6/buzzquizz";
 let test;
+let obj = {};
 
-//Verifica tamanho do titulo
-function tamanhoTitulo(){
-    let nomeTitulo = document.getElementById("titulo").value;
-    let n = nomeTitulo.length;
-    if(n < 20){
-        alert("O titulo deve ter no mínimo 20 caracteres. Numero de caracteres digitados: " + n);
-    }else if(n > 65){
-        alert("O nome não pode ultrapassar 65 caracteres. Numero de caracteres digitados: "+ n);
-    }
+//Código comentado pois estou reduzindo à uma única função, quando a função estiver pronta removerei
+
+// //Verifica tamanho do titulo
+// function tamanhoTitulo(){
+//     let nomeTitulo = document.getElementById("titulo").value;
+//     let n = nomeTitulo.length;
+//     if(n < 20){
+//         alert("O titulo deve ter no mínimo 20 caracteres. Numero de caracteres digitados: " + n);
+//     }else if(n > 65){
+//         alert("O nome não pode ultrapassar 65 caracteres. Numero de caracteres digitados: "+ n);
+//     }
+// }
+
+
+// //verifica se a URL passada é válida 
+// function verificaURL(){
+//     let expressão = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
+//     let re = new RegExp(expressão); /* ("^((http(s?):\/\/(www.)?[a-z]+.com\/)|(magnet:\?xt=urn:btih:))"); */
+
+//     let urlImage = document.getElementById("url-image").value;
+
+//     //Se url valida retorna tudo ok senão retorna invalid
+//     if (re.test(urlImage)) {
+//     alert("Tudo Ok");
+//     } else {
+//     alert("A url passada não é válida");
+//     document.getElementById("url-image").focus();
+//     }
+// }
+
+// //verifica numeros digitados
+// function restricaoNumeros(){
+//     const perguntasInput = document.querySelector("#num-perguntas");
+//     const quizzInput = document.querySelector("#num-quizz");
+
+//     if(perguntasInput.value < 3){
+//         alert("O número de perguntas deve ser maior que: 3");
+//         perguntasInput.focus();
+//     }else if (quizzInput.value < 2){
+//         alert("O valor dos níveis deve ser maior que: 2");
+//         quizzInput.focus();
+//     }
+// }
+
+// //Validação dos inputs
+// function validaInput(){
+//     if(document.getElementById("titulo").value == ""){
+//     alert('Por favor, preencha o campo título');
+//     document.getElementById("titulo").focus();
+//     return false;
+//     }else if(document.getElementById("url-image").value == ""){
+//     alert('Por favor, preencha o campo URL da imagem');
+//     document.getElementById("url-image").focus();
+//     return false;
+//     }else if(document.getElementById("num-perguntas").value == ""){
+//     alert('Por favor, preencha quantas perguntas');
+//     document.getElementById("num-perguntas").focus();
+//     return false;
+//     }else if(document.getElementById("num-quizz").value == ""){
+//     alert('Por favor, preencha quantos níveis');
+//     document.getElementById("num-quizz").focus();
+//     return false;
+//     }
+
+//     tamanhoTitulo();
+//     verificaURL();
+//     restricaoNumeros();
+// }
+
+function verificaImage(verurlimg){
+    return (verurlimg.match(/\.(jpeg|jpg|gif|png)$/) != null);
 }
 
 
-//verifica URL
-function verificaURL(){
-    let re = new RegExp("^((http(s?):\/\/(www.)?[a-z]+.com\/)|(magnet:\?xt=urn:btih:))")
+//Validação dos campos
+function validacao(){
+    const tituloQuizz = document.getElementById("titulo").value;
+    const urlImageQUizz = document.getElementById("url-image").value;
+    const numPerguntasQuizz = document.getElementById("num-perguntas").value;
+    const niveisQuizz = document.getElementById("num-quizz").value;
 
-    let urlImage = document.getElementById("url-image").value;
-
-    //Se url valida retorna tudo ok senão retorna invalid
-    if (re.test(urlImage)) {
-    alert("Tudo Ok");
-    } else {
-    alert("A url passada não é válida");
-    document.getElementById("url-image").focus();
+    if(tituloQuizz < 20 || tituloQuizz > 65 || numPerguntasQuizz < 3 || niveisQuizz < 2 || !verificaImage(urlImageQUizz)){
+        alert("Peencha os campos corretamente");
+    }else{
+        obj = {
+            title: tituloQuizz,
+            image: urlImageQUizz,
+            questions: [],
+            levels: []
+        }
+        document.querySelector(".info-quizz").classList.add("hide");
+        document.querySelector(".build-quizz").classList.remove("hide");
+        criarPerguntas(numPerguntasQuizz);
     }
 }
 
-//verifica numeros digitados
-function restricaoNumeros(){
-    const perguntasInput = document.querySelector("#num-perguntas");
-    const quizzInput = document.querySelector("#num-quizz");
-
-    if(perguntasInput.value < 3){
-        alert("O número de perguntas deve ser maior que: 3");
-        perguntasInput.focus();
-    }else if (quizzInput.value < 2){
-        alert("O valor dos níveis deve ser maior que: 2");
-        quizzInput.focus();
+//Criação das perguntas
+function criarPerguntas(numPerguntasQuizz){
+    const container = document.querySelector(".build-quizz .container");
+    for (let i=1; i<=numPerguntasQuizz; i++){
+        container.innerHTML += `
+        <div class=".pergunta"PerguntaDOconteiner">
+        <h3 class=".pergunta">Pergunta ${i}</h3>
+        <input type="text" placeholder="Texto da pergunta" data-identifier="question"/>
+        <input type="text" placeholder="Cor de fundo da pergunta" data-identifier="question"/>
+        <h3 class="Texto-Especifica-Input Texto-Definiçao">Resposta correta</h3>
+        <input type="text" placeholder="Resposta correta" data-identifier="question"/>
+        <input type="text" placeholder="URL da imagem" data-identifier="question"/>
+        
+        <h3 class="">Respostas Incorretas</h3>
+        <input type="text" placeholder="Resposta incorreta 1" data-identifier="question"/>
+        <input type="text" placeholder="URL da imagem 1" data-identifier="question"/>
+        <input type="text" placeholder="Resposta incorreta 2" data-identifier="question"/>
+        <input type="text" placeholder="URL da imagem 2" data-identifier="question"/>
+        <input type="text" placeholder="Resposta incorreta 3" data-identifier="question"/>
+        <input type="text" placeholder="URL da imagem 3" data-identifier="question"/>
+        </div>`;
     }
-}
-
-//Validação dos inputs
-function validaInput(){
-    if(document.getElementById("titulo").value == ""){
-    alert('Por favor, preencha o campo título');
-    document.getElementById("titulo").focus();
-    return false;
-    }else if(document.getElementById("url-image").value == ""){
-    alert('Por favor, preencha o campo URL da imagem');
-    document.getElementById("url-image").focus();
-    return false;
-    }else if(document.getElementById("num-perguntas").value == ""){
-    alert('Por favor, preencha quantas perguntas');
-    document.getElementById("num-perguntas").focus();
-    return false;
-    }else if(document.getElementById("num-quizz").value == ""){
-    alert('Por favor, preencha quantos níveis');
-    document.getElementById("num-quizz").focus();
-    return false;
-    }
-
-    tamanhoTitulo();
-    restricaoNumeros();
-    verificaURL();
 }
 
 
@@ -151,3 +206,9 @@ function home() {
 }
 
 getQuizzes();
+
+//Avança à tela de criação do quizz
+function criarQuizz(){
+    document.querySelector("main").classList.add("hide");
+    document.querySelector(".info-quizz").classList.remove("hide");
+}
