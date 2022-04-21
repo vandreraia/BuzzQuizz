@@ -170,11 +170,12 @@ function postQuizz(response) {
     <div>
         <p>${quizz.title}</p>
     </div>`;
-    el = document.querySelector(".question-container");
+    el = document.querySelector(".question-containers");
     el.innerHTML = "";
 
     for (let i = 0; i < quizz.questions.length; i++) {
         str += `
+        <div class="question-container flex-center">
         <div style="background-color:${quizz.questions[i].color};" class="pergunta flex-center">
             ${quizz.questions[i].title}
         </div>
@@ -188,13 +189,13 @@ function postQuizz(response) {
                 <p>${quizz.questions[i].answers[j].text}</p>
             </div>`;
         }
-        str += `</div>`;
+        str += `</div></div>`;
     }
     el.innerHTML = str;
 }
 
 function checkResposta(el) {
-    const scrollBlock = document.querySelector(".question-container").children;
+    const scrollBlock = document.querySelector(".question-containers").children;
     answers = el.parentElement.children;
     if (el.id == "true") {
         acerto++;
@@ -209,17 +210,18 @@ function checkResposta(el) {
         }
     }
     el.classList.remove("opacity");
-    scrollIndex += 2;
+    scrollIndex++;
     if (scrollIndex == scrollBlock.length) {
         quizzEnd();
     }
+    if (scrollIndex < scrollBlock.length)
     scrollBlock[scrollIndex].scrollIntoView();
 }
 
 function quizzEnd() {
     const porcentagem = acerto / quizz.questions.length;
     const level = getLevel(porcentagem);
-    let el = document.querySelector(".quizz-page");
+    let el = document.querySelector(".end-container");
     el.innerHTML +=`
                 <div class="question-container">
                     <div style="background-color:#EC362D;" class="pergunta flex-center">
@@ -231,12 +233,13 @@ function quizzEnd() {
                     </div>
                 </div>
                 `;
-    el = document.querySelector(".quizz-page")
     el.innerHTML += `
+    <div class="flex-center flex-collum">
     <button onCLick="quizzReset()" class="button">Reiniciar Quizz</button>
-    
-    <button onclick="home() class="button"">Voltar pra home</button>
-    `
+    <button onclick="home()" class="button button-quizz">Voltar para home</button>
+    </div>
+    `;
+    document.querySelector(".end-container").scrollIntoView();
 }
 
 function getLevel(porcentagem) {
@@ -250,17 +253,20 @@ function getLevel(porcentagem) {
 
 function quizzReset() {
     varReset();
-    const questions = document.querySelector(".question-container").children;
-    test = questions;
-    for (let i = 0; i < answers.length; i++) {
-        answers[i].setAttribute("onclick", "checkResposta(this)");
-        answers[i].classList.remove("opacity");
-        if (answers[i].id == "true") {
-            answers[i].classList.remove("resposta-certa");
-        } else {
-            answers[i].classList.remove("resposta-errada");
+    const questions = document.querySelector(".question-containers").children;
+    for (let i = 0; i < questions.length; i++) {
+        answers = questions[i].querySelector(".respostas").children;
+        for (let j = 0; j < answers.length; j++) {
+            answers[j].setAttribute("onclick", "checkResposta(this)");
+            answers[j].classList.remove("opacity");
+            if (answers[j].id == "true") {
+                answers[j].classList.remove("resposta-certa");
+            } else {
+                answers[j].classList.remove("resposta-errada");
+            }
         }
     }
+    document.querySelector(".end-container").innerHTML = "";
     document.querySelector(".titulo").scrollIntoView();
 }
 
@@ -269,6 +275,9 @@ function randomizador() {
 }
 
 function home() {
+    document.querySelector(".end-container").innerHTML = "";
+    document.querySelector(".titulo").scrollIntoView();
+    document.querySelector(".question-container").innerHTML = "";
     document.querySelector(".quizzez-list").classList.remove("hide");
     document.querySelector(".quizz-page").classList.add("hide");
     varReset()
