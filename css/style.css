@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap');
 
 body {
-    background-color: #FAFAFA;
+    background-color: #eeeeee;
     font-family: 'Roboto', sans-serif;
 }
 
@@ -22,7 +22,7 @@ header {
 }
 
 main {
-    padding: 70px 0px;
+    padding: 70px 160px;
 }
 
 .flex-center {
@@ -113,10 +113,6 @@ ion-icon{
     margin-bottom: 5px;
 }
 
-.qui {
-    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 1)), url(/BuzzQuizz/images/Rectangle\ 36.png);
-}
-
 .info-quizz {
     margin-top: 100px;
     flex-direction: column;
@@ -187,6 +183,7 @@ h2 {
     align-items: center;
     justify-content: center;
     border-radius: 15px;
+    border-width: 0;
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 400;
@@ -219,6 +216,7 @@ h2 {
 }
 
 .question-container {
+    flex-direction: column;
     background-color: white;
     margin: 70px 20%;
     padding: 30px;
@@ -227,6 +225,7 @@ h2 {
 .pergunta {
     background-color: #434CA0;
     height: 138px;
+    width: 100%;
     text-align: center;
     color: white;
     font-size: 23px;
@@ -249,6 +248,34 @@ h2 {
 
 .resposta>p{
     margin: 5px;
+}
+
+.opacity {
+    opacity: 0.3;
+}
+
+.resposta-certa {
+    color: #009C22;
+}
+
+.resposta-errada {
+    color: #FF4B4B;
+}
+
+.end {
+    display: flex;
+    margin-top: 10px;
+}
+
+.end>img {
+    width: 364px;
+    height: 274px;
+}
+
+.end>h5 {
+    margin: 0 20px;
+    font-size: 19px;
+    font-weight: 700;
 }
 
 .hide {

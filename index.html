@@ -29,36 +29,37 @@
             <div class="todos-quizzes flex-center">
             </div>
         </div>
-        <!-- Tela 2 - Página de um quizz -->
-        <div class="quizz-page hide">
-            <div class="titulo">
-            </div>
-            <div class="question-container">
-            </div>
-            <button onclick="home()">Voltar pra home</button> 
-        </div>
     </main>
-    
+    <!-- Tela 2 - Página de um quizz -->
+    <div class="quizz-page hide">
+        <div class="titulo">
+        </div>
+        <div class="question-container flex-center">
+        </div>
+    </div>
+
     <!-- Informações básicas do Quizz - TELA DESKTOP 8 -->
     <div class="info-quizz flex-center hide">
         <h2>Informações básicas do seu Quizz</h2>
         <div class="container">
-            <input type="text" class="titulo" id="titulo" placeholder="Título do seu quizz" minlength="20" maxlength="65">
-            <input type="url" class="url-image" id="url-image"  placeholder="URL da imagem do seu quizz">
-            <input type="number" class="num-perguntas" id="num-perguntas" placeholder="Quantidades de Perguntas do quizz">
+            <input type="text" class="titulo" id="titulo" placeholder="Título do seu quizz" minlength="20"
+                maxlength="65">
+            <input type="url" class="url-image" id="url-image" placeholder="URL da imagem do seu quizz">
+            <input type="number" class="num-perguntas" id="num-perguntas"
+                placeholder="Quantidades de Perguntas do quizz">
             <input type="number" class="num-quizz" id="num-quizz" placeholder="Quantidade de níveis do quizz">
         </div>
         <div class="button" onclick="validacao()">Prosseguir para criar perguntas</div>
     </div>
 
     <!-- Construindo o quizz - Tela Desktop 9 -->
-    <div class="build-quizz flex-center ">
+    <div class="build-quizz flex-center hide">
         <h2>Crie suas perguntas</h2>
         <div class="container-pergunta">
         </div>
         <div class="button">Prosseguir pra criar níveis</div>
     </div>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
@@ -66,4 +67,3 @@
 </body>
 
 </html>
-

@@ -1,5 +1,9 @@
 const API = "https://mock-api.driven.com.br/api/v6/buzzquizz";
+let answers;
 let test;
+let scrollIndex = 0;
+let acerto = 0;
+let quizz;
 let obj = {};
 
 //Código comentado pois estou reduzindo à uma única função, quando a função estiver pronta removerei
@@ -134,7 +138,6 @@ function getQuizzes() {
 function postQuizzes(response) {
     const quizzes = response.data;
     const element = document.querySelector(".todos-quizzes");
-    test = quizzes;
     //element.innerHTML = "";
     for (let i = 0; i < quizzes.length; i++) {
         element.innerHTML += `
@@ -158,7 +161,7 @@ function showquizz(id) {
 }
 
 function postQuizz(response) {
-    const quizz = response.data;
+    quizz = response.data;
     let el;
     let str = "";
     el = document.querySelector(".titulo");
@@ -167,7 +170,6 @@ function postQuizz(response) {
     <div>
         <p>${quizz.title}</p>
     </div>`;
-    test = quizz;
     el = document.querySelector(".question-container");
     el.innerHTML = "";
 
@@ -191,10 +193,75 @@ function postQuizz(response) {
     el.innerHTML = str;
 }
 
-function checkResposta(id) {
-    test = id;
-    console.log(id)
-    //document.getElementById('remove-onclick').removeAttribute("onclick");
+function checkResposta(el) {
+    const scrollBlock = document.querySelector(".question-container").children;
+    answers = el.parentElement.children;
+    if (el.id == "true") {
+        acerto++;
+    }
+    for (let i = 0; i < answers.length; i++) {
+        answers[i].removeAttribute("onclick");
+        answers[i].classList.add("opacity");
+        if (answers[i].id == "true") {
+            answers[i].classList.add("resposta-certa");
+        } else {
+            answers[i].classList.add("resposta-errada");
+        }
+    }
+    el.classList.remove("opacity");
+    scrollIndex += 2;
+    if (scrollIndex == scrollBlock.length) {
+        quizzEnd();
+    }
+    scrollBlock[scrollIndex].scrollIntoView();
+}
+
+function quizzEnd() {
+    const porcentagem = acerto / quizz.questions.length;
+    const level = getLevel(porcentagem);
+    let el = document.querySelector(".quizz-page");
+    el.innerHTML +=`
+                <div class="question-container">
+                    <div style="background-color:#EC362D;" class="pergunta flex-center">
+                        ${(porcentagem*100).toFixed(0)}% de acerto: ${quizz.levels.at(level).title}
+                    </div>
+                    <div class="end">
+                        <img src="${quizz.levels.at(level).image}" />
+                        <h5>${quizz.levels.at(level).text}</h5>
+                    </div>
+                </div>
+                `;
+    el = document.querySelector(".quizz-page")
+    el.innerHTML += `
+    <button onCLick="quizzReset()" class="button">Reiniciar Quizz</button>
+    
+    <button onclick="home() class="button"">Voltar pra home</button>
+    `
+}
+
+function getLevel(porcentagem) {
+    //quizz.levels.sort();
+    for (let i = 0; quizz.levels.length; i++) {
+        if (porcentagem >= quizz.levels[i].minValue) {
+            return (i);
+        }
+    }
+}
+
+function quizzReset() {
+    varReset();
+    const questions = document.querySelector(".question-container").children;
+    test = questions;
+    for (let i = 0; i < answers.length; i++) {
+        answers[i].setAttribute("onclick", "checkResposta(this)");
+        answers[i].classList.remove("opacity");
+        if (answers[i].id == "true") {
+            answers[i].classList.remove("resposta-certa");
+        } else {
+            answers[i].classList.remove("resposta-errada");
+        }
+    }
+    document.querySelector(".titulo").scrollIntoView();
 }
 
 function randomizador() {
@@ -204,8 +271,13 @@ function randomizador() {
 function home() {
     document.querySelector(".quizzez-list").classList.remove("hide");
     document.querySelector(".quizz-page").classList.add("hide");
+    varReset()
 }
 
+function varReset() {
+    acerto = 0;
+    scrollIndex = 0;
+}
 getQuizzes();
 
 //Avança à tela de criação do quizz
