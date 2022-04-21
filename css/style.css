@@ -32,7 +32,17 @@ main {
 }
 
 .quizzez-list {
-    padding: 70px 160px;
+    width: 100%;
+}
+
+.quizzez-list h3{
+    margin: 0px 18px;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 23px;
+    color: #000000;
 }
 
 .quizzez-list>h3 {
@@ -40,25 +50,31 @@ main {
 }
 
 .user-quizzez {
-    margin: 50px 0;
     justify-content: space-evenly;
     flex-direction: column;
     border: 1px dashed #D4D4D4;
     height: 120px;
-    margin: 0px 18px;
+    margin: 50px 18px;
 }
 
 .user-quizzez>div {
-    width: 160px;
+    /* width: 160px; */
+    width: 100%;
     text-align: center;
     color: #B9B9B9;
 }
 
 .user-quizzez>button {
     border: 1px dashed #EC362D;
-    border-radius: 30px;
+    border-radius: 50px;
     color: #EC362D;
     padding: 5px 15px;
+    background: #FAFAFA;
+}
+
+ion-icon{
+    color: #EC362D;
+    font-size: 30px;
 }
 
 .todos-quizzes {
@@ -103,6 +119,7 @@ main {
 
 .info-quizz {
     margin-top: 100px;
+    flex-direction: column;
 }
 
 h2 {
@@ -113,6 +130,7 @@ h2 {
     line-height: 23px;
     display: flex;
     align-items: center;
+    justify-content: center;
     color: #000000;
 }
 
@@ -138,6 +156,16 @@ h2 {
     box-sizing: border-box;
     border-radius: 5px;
     font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 22px;  
+    color: #BABABA;
+}
+
+.container > input::placeholder {
+    padding: 0px 5px;
+    font-family: 'Roboto';
     font-style: italic;
     font-weight: 400;
     font-size: 19px;
@@ -145,10 +173,16 @@ h2 {
     color: #BABABA;
 }
 
+.build-quizz {
+    margin-top: 100px;
+    flex-direction: column;
+}
+
 .button {
     background: #EC362D;
+    width: 323px;
     height: 54px;
-    padding: 0px 10px;
+    padding: 5px 10px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -156,13 +190,9 @@ h2 {
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 400;
-    font-size: 21px;
-    line-height: 25px;
+    font-size: 18px;
+    line-height: 21px;
     color: #FFF5F4;
-}
-
-.hide {
-    display: none;
 }
 
 .titulo {
@@ -219,6 +249,10 @@ h2 {
 
 .resposta>p{
     margin: 5px;
+}
+
+.hide {
+    display: none;
 }
 
 @media screen and (max-width: 1100px) {
