@@ -35,6 +35,10 @@ main {
     padding: 70px 160px;
 }
 
+.quizzez-list>h3 {
+    padding: 20px 20px;
+}
+
 .user-quizzez {
     margin: 50px 0;
     justify-content: space-evenly;
@@ -219,6 +223,10 @@ h2 {
 
 @media screen and (max-width: 1100px) {
     main {
+        padding: 70px 0;
+    }
+
+    .quizzez-list {
         padding: 70px 0;
     }
 
