@@ -61,15 +61,23 @@
             <input type="number" class="num-perguntas" id="num-perguntas" placeholder="Quantidades de Perguntas do quizz">
             <input type="number" class="num-quizz" id="num-quizz" placeholder="Quantidade de níveis do quizz">
         </div>
-        <div class="button" onclick="validacao()">Prosseguir para criar perguntas</div>
+        <div class="button" onclick="validacao(this)">Prosseguir para criar perguntas</div>
     </div>
 
-    <!-- Construindo o quizz - Tela Desktop 9 -->
-    <div class="build-quizz flex-center ">
+    <!-- Construindo as perguntas do quizz - Tela Desktop 9 -->
+    <div class="build-quizz flex-center hide">
         <h2>Crie suas perguntas</h2>
-        <div class="container-pergunta">
+        <div class="container">
         </div>
-        <div class="button">Prosseguir pra criar níveis</div>
+        <div class="button" onclick="validarPerguntas()">Prosseguir pra criar níveis</div>
+    </div>
+
+    <!-- Construindo os Levels - Tela Desktop 10 -->
+    <div class="build-quizz flex-center hide">
+        <h2>Agora, decida os níveis</h2>
+        <div class="container">
+        </div>
+        <div class="button">Finalizar quizz</div>
     </div>
     
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
