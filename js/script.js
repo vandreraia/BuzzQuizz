@@ -1,5 +1,9 @@
 const API = "https://mock-api.driven.com.br/api/v6/buzzquizz";
+let answers;
 let test;
+let scrollIndex = 0;
+let acerto = 0;
+let quizz;
 let obj = {};
 let qtddLevels;
 
@@ -239,7 +243,6 @@ function getQuizzes() {
 function postQuizzes(response) {
     const quizzes = response.data;
     const element = document.querySelector(".todos-quizzes");
-    test = quizzes;
     //element.innerHTML = "";
     for (let i = 0; i < quizzes.length; i++) {
         element.innerHTML += `
@@ -263,7 +266,7 @@ function showquizz(id) {
 }
 
 function postQuizz(response) {
-    const quizz = response.data;
+    quizz = response.data;
     let el;
     let str = "";
     el = document.querySelector(".titulo");
@@ -272,12 +275,12 @@ function postQuizz(response) {
     <div>
         <p>${quizz.title}</p>
     </div>`;
-    test = quizz;
-    el = document.querySelector(".question-container");
+    el = document.querySelector(".question-containers");
     el.innerHTML = "";
 
     for (let i = 0; i < quizz.questions.length; i++) {
         str += `
+        <div class="question-container flex-center">
         <div style="background-color:${quizz.questions[i].color};" class="pergunta flex-center">
             ${quizz.questions[i].title}
         </div>
@@ -291,14 +294,85 @@ function postQuizz(response) {
                 <p>${quizz.questions[i].answers[j].text}</p>
             </div>`;
         }
-        str += `</div>`;
+        str += `</div></div>`;
     }
     el.innerHTML = str;
 }
 
-function checkResposta(id) {
-    test = id;
-    console.log(id)
+function checkResposta(el) {
+    const scrollBlock = document.querySelector(".question-containers").children;
+    answers = el.parentElement.children;
+    if (el.id == "true") {
+        acerto++;
+    }
+    for (let i = 0; i < answers.length; i++) {
+        answers[i].removeAttribute("onclick");
+        answers[i].classList.add("opacity");
+        if (answers[i].id == "true") {
+            answers[i].classList.add("resposta-certa");
+        } else {
+            answers[i].classList.add("resposta-errada");
+        }
+    }
+    el.classList.remove("opacity");
+    scrollIndex++;
+    if (scrollIndex == scrollBlock.length) {
+        quizzEnd();
+    }
+    if (scrollIndex < scrollBlock.length)
+    scrollBlock[scrollIndex].scrollIntoView();
+}
+
+function quizzEnd() {
+    const porcentagem = acerto / quizz.questions.length;
+    const level = getLevel(porcentagem);
+    let el = document.querySelector(".end-container");
+    el.innerHTML +=`
+                <div class="question-container">
+                    <div style="background-color:#EC362D;" class="pergunta flex-center">
+                        ${(porcentagem*100).toFixed(0)}% de acerto: ${quizz.levels.at(level).title}
+                    </div>
+                    <div class="end">
+                        <img src="${quizz.levels.at(level).image}" />
+                        <h5>${quizz.levels.at(level).text}</h5>
+                    </div>
+                </div>
+                `;
+    el.innerHTML += `
+    <div class="flex-center flex-collum">
+    <button onCLick="quizzReset()" class="button">Reiniciar Quizz</button>
+    <button onclick="home()" class="button button-quizz">Voltar para home</button>
+    </div>
+    `;
+    document.querySelector(".end-container").scrollIntoView();
+}
+
+function getLevel(porcentagem) {
+    //quizz.levels.sort();
+    for (let i = 0; quizz.levels.length; i++) {
+        if (porcentagem >= quizz.levels[i].minValue) {
+            return (i);
+        }
+    }
+}
+
+function quizzReset() {
+    varReset();
+    const questions = document.querySelector(".question-containers").children;
+    for (let i = 0; i < questions.length; i++) {
+        answers = questions[i].querySelector(".respostas").children;
+        for (let j = 0; j < answers.length; j++) {
+            answers[j].setAttribute("onclick", "checkResposta(this)");
+            answers[j].classList.remove("opacity");
+            if (answers[j].id == "true") {
+                answers[j].classList.remove("resposta-certa");
+            } else {
+                answers[j].classList.remove("resposta-errada");
+            }
+        }
+    }
+    document.querySelector(".end-container").innerHTML = "";
+    document.querySelector(".titulo").scrollIntoView();
 }
 
 function randomizador() {
@@ -306,10 +380,18 @@ function randomizador() {
 }
 
 function home() {
+    document.querySelector(".end-container").innerHTML = "";
+    document.querySelector(".titulo").scrollIntoView();
+    document.querySelector(".question-container").innerHTML = "";
     document.querySelector(".quizzez-list").classList.remove("hide");
     document.querySelector(".quizz-page").classList.add("hide");
+    varReset()
 }
 
+function varReset() {
+    acerto = 0;
+    scrollIndex = 0;
+}
 getQuizzes();
 
 
