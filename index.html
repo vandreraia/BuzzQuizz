@@ -7,15 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>BuzzQuizz</title>
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/reset.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 
 <body>
     <header>
         BuzzQuizz
     </header>
-    <main class="main">
+    <main class="main flex-center flex-collumn">
         <!-- Tela 1 - Lista de Quizzes -->
         <div class="quizzez-list">
             <div class="user-quizzez flex-center">
@@ -48,25 +48,34 @@
                 placeholder="Quantidades de Perguntas do quizz">
             <input type="number" class="num-quizz" id="num-quizz" placeholder="Quantidade de níveis do quizz">
         </div>
-        <div class="button" onclick="validacao(this)">Prosseguir para criar perguntas</div>
+        <div class="button flex-center" onclick="validacao(this)">Prosseguir para criar perguntas</div>
     </div>
     <!-- Construindo as perguntas do quizz - Tela Desktop 9 -->
 
     <!-- Construindo o quizz - Tela Desktop 9 -->
 
-    <div class="build-quizz flex-center hide">
+    <div class="build-pergunta flex-center flex-collumn hide">
         <h2>Crie suas perguntas</h2>
-        <div class="container">
+        <div class="container-pergunta info-quizz flex-center">
         </div>
-        <div class="button" onclick="validarPerguntas()">Prosseguir pra criar níveis</div>
+        <div class="button flex-center" onclick="validarPerguntas()">Prosseguir pra criar níveis</div>
     </div>
 
-    <!-- Construindo os Levels - Tela Desktop 10 -->
-    <div class="build-quizz flex-center hide">
+    <!-- Construindo os Niveis - Tela Desktop 10 -->
+    <div class="build-level flex-center flex-collumn hide">
         <h2>Agora, decida os níveis</h2>
-        <div class="container">
+        <div class="container-level info-quizz flex-center">
         </div>
-        <div class="button">Finalizar quizz</div>
+        <div class="button flex-center" onclick="finalizar()">Finalizar quizz</div>
+    </div>
+
+    <!-- Tela final - Desktop 11 -->
+    <div class="final flex-center flex-collumn hide">
+        <h3>Seu quizz está pronto!</h3>
+        <div class="container-final">
+        </div>
+        <div class="button-final flex-center" onclick="acessarQuizz()">Acessar Quizz</div>
+        <a onclick="home()">Voltar pra home</a>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
