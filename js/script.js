@@ -191,6 +191,35 @@ function finalizar() {
         obj.levels = [];
         niveisValidados = 0;
     }
+    //uploadQuizz();
+}
+
+function getLastQuizz (response) {
+    const quizzes = response.data;
+    const quizzNow = quizzes[0].id;
+    test = quizzNow;
+    const addHTML = document.querySelector(".final");
+    addHTML.innerHTML = `
+    <h3>Seu quizz está pronto!</h3>
+    <div onclick="acessarQuizz(${quizzNow.id})">
+        <img src=${quizzNow.image} data-identifier="quizz-card">
+        <div >${quizzNow.title}</div>
+    </div>
+    <div class="button-final flex-center" onclick="acessarQuizz(${quizzNow.id})">Acessar Quizz</div>
+    <a onclick="home()">Voltar pra home</a> `
+}
+
+function uploadQuizz() {
+    const promise = axios.post(`${API}/quizzes`, obj);
+    promise.then(getKey);
+    promise.catch(function () {
+        console.log("uploadQuizz error");
+    });
+}
+
+function getKey(response) {
+    test = response;
+    console.log(response.data.key);
 }
 
 function abrirQuizz(id) {
@@ -404,6 +433,7 @@ function criarQuizz() {
 //Chamar no final da criação do quizz
 function setUserQuizz(response) {
     const quizzes = response.data;
+    test = quizzes;
     const userId = JSON.parse(localStorage.getItem("id"));
     if (userId == null) {
         initializeLocalStorage();
@@ -416,5 +446,16 @@ function initializeLocalStorage() {
     let arr = [];
     localStorage.setItem("id", JSON.stringify(arr));
 }
-initializeLocalStorage(); //deletar depois de finalizar criar quizz
+
+function removeQuizz(id) {
+    axios.delete(`${API}/quizzes/${id}`, {
+        headers: {
+            "Secret-Key": authorizationToken
+        }
+    });
+    //axios.delete(url, quizz, { headers: "Secret-Key" = "seu key" })
+
+}
+//initializeLocalStorage(); //deletar depois de finalizar criar quizz
+getQuizzes(getLastQuizz);
 getQuizzes(postQuizzes);
