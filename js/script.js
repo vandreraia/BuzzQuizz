@@ -152,6 +152,19 @@ function criarNiveis(qtddLevels) {
     }
 }
 
+function uploadQuizz() {
+    const promise = axios.post(`${API}/quizzes`, obj);
+    promise.then(getKey);
+    promise.catch(function () {
+        console.log("uploadQuizz error");
+    });
+}
+
+function getKey(response) {
+    test = response;
+    console.log(response.data.key);
+}
+
 function finalizar() {
     const numNiveis = document.querySelectorAll(".levelContainer");
     const niveisPorcentagemAcerto = document.querySelectorAll(".porcentagemAcerto");
@@ -186,35 +199,28 @@ function finalizar() {
         document.querySelector(".final").classList.remove("hide");
         niveisValidados = 0;
         verificarPorcentagem = 0;
-        /**/
+        uploadQuizz();
+        getLastQuizz();
     } else {
         obj.levels = [];
         niveisValidados = 0;
     }
 }
 
-function abrirQuizz(id) {
-    const selecionado = axios.get(`${API}/quizzes/${id}`);
-    selecionado.then(colocarQuizzTela);
-    identifier = id;
+function getLastQuizz (response) {
+    const quizzes = response.data;
+    const quizzNow = quizzes[0];
+
+    const addHTML = document.querySelector(".final");
+    addHTML.innerHTML = `
+    <h3>Seu quizz está pronto!</h3>
+    <div onclick="acessarQuizz(${quizzNow.id})">
+        <img src=${quizzNow.image} data-identifier="quizz-card">
+        <div >${quizzNow.title}</div>
+    </div>
+    <div class="button-final flex-center" onclick="acessarQuizz(${quizzNow.id})">Acessar Quizz</div>
+    <a onclick="home()">Voltar pra home</a> `
 }
-
-function acessarQuizz(idQuizz) {
-    document.querySelector(".final").classList.add("hide");
-    abrirQuizz(idQuizz);
-}
-
-// //ocultar divs de perguntas
-// function ocultar(){
-//     // const icon = document.querySelector("create");
-//     const div = document.querySelector(".check");
-
-//     if(div.style.display === "none"){
-//         div.style.display = "block";
-//     }else{
-//         div.style.display = "none";
-//     }
-// }
 
 function getQuizzes(func) {
     const promise = axios.get(`${API}/quizzes`);
