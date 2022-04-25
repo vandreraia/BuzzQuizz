@@ -18,16 +18,21 @@
     <main class="main">
         <!-- Tela 1 - Lista de Quizzes -->
         <div class="quizzez-list">
-            <div class="user-quizzez flex-center">
+            <div class="user-quizz flex-center">
                 <div>
                     Você não criou nenhum quizz ainda :(
                 </div>
                 <button id="criar-quizz" onclick="criarQuizz()">Criar Quizz</button>
-                <ion-icon class="hide" name="add-circle"></ion-icon>
+            </div>
+            <div class="user-quizzes-container hide">
+                <div class="Seus-Quizzes">
+                    <h3>Seus Quizzes</h3>
+                    <ion-icon onclick="criarQuizz()" name="add-circle"></ion-icon>
+                </div>
+                <div class="user-quizzes flex-center"></div>
             </div>
             <h3>Todos os Quizzes</h3>
-            <div class="todos-quizzes flex-center">
-            </div>
+            <div class="todos-quizzes flex-center"></div>
         </div>
     </main>
     <!-- Tela 2 - Página de um quizz -->

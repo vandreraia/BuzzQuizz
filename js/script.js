@@ -75,21 +75,21 @@ let obj = {};
 //     restricaoNumeros();
 // }
 
-function verificaImage(verurlimg){
+function verificaImage(verurlimg) {
     return (verurlimg.match(/\.(jpeg|jpg|gif|png)$/) != null);
 }
 
 
 //Validação dos campos
-function validacao(){
+function validacao() {
     const tituloQuizz = document.getElementById("titulo").value;
     const urlImageQUizz = document.getElementById("url-image").value;
     const numPerguntasQuizz = document.getElementById("num-perguntas").value;
     const niveisQuizz = document.getElementById("num-quizz").value;
 
-    if(tituloQuizz < 20 || tituloQuizz > 65 || numPerguntasQuizz < 3 || niveisQuizz < 2 || !verificaImage(urlImageQUizz)){
+    if (tituloQuizz < 20 || tituloQuizz > 65 || numPerguntasQuizz < 3 || niveisQuizz < 2 || !verificaImage(urlImageQUizz)) {
         alert("Peencha os campos corretamente");
-    }else{
+    } else {
         obj = {
             title: tituloQuizz,
             image: urlImageQUizz,
@@ -103,9 +103,9 @@ function validacao(){
 }
 
 //Criação das perguntas
-function criarPerguntas(numPerguntasQuizz){
+function criarPerguntas(numPerguntasQuizz) {
     const container = document.querySelector(".build-quizz .container");
-    for (let i=1; i<=numPerguntasQuizz; i++){
+    for (let i = 1; i <= numPerguntasQuizz; i++) {
         container.innerHTML += `
         <div class=".pergunta"PerguntaDOconteiner">
         <h3 class=".pergunta">Pergunta ${i}</h3>
@@ -127,9 +127,9 @@ function criarPerguntas(numPerguntasQuizz){
 }
 
 
-function getQuizzes() {
+function getQuizzes(func) {
     const promise = axios.get(`${API}/quizzes`);
-    promise.then(postQuizzes);
+    promise.then(func);
     promise.catch(function () {
         console.log("getQuizzes error");
     });
@@ -137,9 +137,25 @@ function getQuizzes() {
 
 function postQuizzes(response) {
     const quizzes = response.data;
-    const element = document.querySelector(".todos-quizzes");
+    const userId = JSON.parse(localStorage.getItem("id"));
+    let element = document.querySelector(".todos-quizzes");
     //element.innerHTML = "";
+    if (userId.length > 0) {
+        document.querySelector(".user-quizzes-container").classList.remove("hide")
+        document.querySelector(".user-quizz").classList.add("hide")
+    } else {
+        document.querySelector(".user-quizzes-container").classList.add("hide")
+        document.querySelector(".user-quizz").classList.remove("hide")
+    }
     for (let i = 0; i < quizzes.length; i++) {
+        for (let j = 0; j < userId.length; j++) {
+            if (quizzes[i].id === userId[j]) {
+                element = document.querySelector(".user-quizzes");
+                break;
+            } else {
+                element = document.querySelector(".todos-quizzes");
+            }
+        }
         element.innerHTML += `
         <div id="${quizzes[i].id}" onclick="showquizz(this.id)" class="quizz">
             <img src="${quizzes[i].image}" />
@@ -215,17 +231,17 @@ function checkResposta(el) {
         quizzEnd();
     }
     if (scrollIndex < scrollBlock.length)
-    scrollBlock[scrollIndex].scrollIntoView();
+        scrollBlock[scrollIndex].scrollIntoView();
 }
 
 function quizzEnd() {
     const porcentagem = acerto / quizz.questions.length;
     const level = getLevel(porcentagem);
     let el = document.querySelector(".end-container");
-    el.innerHTML +=`
+    el.innerHTML += `
                 <div class="question-container">
                     <div style="background-color:#EC362D;" class="pergunta flex-center">
-                        ${(porcentagem*100).toFixed(0)}% de acerto: ${quizz.levels.at(level).title}
+                        ${(porcentagem * 100).toFixed(0)}% de acerto: ${quizz.levels.at(level).title}
                     </div>
                     <div class="end">
                         <img src="${quizz.levels.at(level).image}" />
@@ -287,10 +303,26 @@ function varReset() {
     acerto = 0;
     scrollIndex = 0;
 }
-getQuizzes();
 
 //Avança à tela de criação do quizz
-function criarQuizz(){
+function criarQuizz() {
     document.querySelector("main").classList.add("hide");
     document.querySelector(".info-quizz").classList.remove("hide");
 }
+//Chamar no final da criação do quizz
+function setUserQuizz(response) {
+    const quizzes = response.data;
+    const userId = JSON.parse(localStorage.getItem("id"));
+    if (userId == null) {
+        initializeLocalStorage();
+    }
+    userId.push(quizzes[0].id);
+    localStorage.setItem("id", JSON.stringify(userId));
+}
+
+function initializeLocalStorage() {
+    let arr = [];
+    localStorage.setItem("id", JSON.stringify(arr));
+}
+initializeLocalStorage(); //deletar depois de finalizar criar quizz
+getQuizzes(postQuizzes);
