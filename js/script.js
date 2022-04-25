@@ -191,35 +191,6 @@ function finalizar() {
         obj.levels = [];
         niveisValidados = 0;
     }
-    //uploadQuizz();
-}
-
-function getLastQuizz (response) {
-    const quizzes = response.data;
-    const quizzNow = quizzes[0].id;
-    test = quizzNow;
-    const addHTML = document.querySelector(".final");
-    addHTML.innerHTML = `
-    <h3>Seu quizz está pronto!</h3>
-    <div onclick="acessarQuizz(${quizzNow.id})">
-        <img src=${quizzNow.image} data-identifier="quizz-card">
-        <div >${quizzNow.title}</div>
-    </div>
-    <div class="button-final flex-center" onclick="acessarQuizz(${quizzNow.id})">Acessar Quizz</div>
-    <a onclick="home()">Voltar pra home</a> `
-}
-
-function uploadQuizz() {
-    const promise = axios.post(`${API}/quizzes`, obj);
-    promise.then(getKey);
-    promise.catch(function () {
-        console.log("uploadQuizz error");
-    });
-}
-
-function getKey(response) {
-    test = response;
-    console.log(response.data.key);
 }
 
 function abrirQuizz(id) {
@@ -409,14 +380,6 @@ function randomizador() {
 }
 
 function home() {
-    // document.querySelector(".end-container").innerHTML = "";
-    // document.querySelector(".titulo").scrollIntoView();
-    // document.querySelector(".question-container").innerHTML = "";
-    // document.querySelector(".quizzez-list").classList.remove("hide");
-    // document.querySelector(".quizz-page").classList.add("hide");
-    // varReset()
-
-    //sugestão:
     location.reload();
 }
 
