@@ -208,11 +208,11 @@ function getUserQuizz (response) {
     const addHTML = document.querySelector(".final");
     addHTML.innerHTML = `
     <h3>Seu quizz está pronto!</h3>
-    <div onclick="acessarQuizz(${quizzNow.id})">
+    <div onclick="showquizz(${quizzNow.id})">
         <img src=${quizzNow.image} data-identifier="quizz-card">
         <div >${quizzNow.title}</div>
     </div>
-    <div class="button-final flex-center" onclick="acessarQuizz(${quizzNow.id})">Acessar Quizz</div>
+    <div class="button-final flex-center" onclick="showquizz(${quizzNow.id})">Acessar Quizz</div>
     <a onclick="home()">Voltar pra home</a> `
 
     setUserQuizz(quizzNow, key);
@@ -242,23 +242,34 @@ function postQuizzes(response) {
         for (let j = 0; j < userId.length; j++) {
             if (quizzes[i].id === userId[j]) {
                 element = document.querySelector(".user-quizzes");
-                break;
+                element.innerHTML += `
+                <div class="quizz">
+                    <img id="${quizzes[i].id}" onclick="showquizz(this.id)" src="${quizzes[i].image}" />
+                    <div>
+                        <p>${quizzes[i].title}</p>
+                    </div>
+                    <div class="trash flex-center">
+                        <ion-icon id="${quizzes[i].id}" onClick="removeQuizz(this.id)" name="trash-outline"></ion-icon>
+                        <ion-icon name="create-outline"></ion-icon>
+                    </div>
+                </div>`;
             } else {
                 element = document.querySelector(".todos-quizzes");
+                element.innerHTML += `
+                <div id="${quizzes[i].id}" onclick="showquizz(this.id)" class="quizz">
+                    <img src="${quizzes[i].image}" />
+                    <div>
+                        <p>${quizzes[i].title}</p>
+                    </div>
+                </div>`;
             }
         }
-        element.innerHTML += `
-        <div id="${quizzes[i].id}" onclick="showquizz(this.id)" class="quizz">
-            <img src="${quizzes[i].image}" />
-            <div>
-                <p>${quizzes[i].title}</p>
-            </div>
-        </div>`;
     }
 }
 
 function showquizz(id) {
     document.querySelector(".quizzez-list").classList.add("hide");
+    document.querySelector(".final").classList.add("hide");
     document.querySelector(".quizz-page").classList.remove("hide");
     const promise = axios.get(`${API}/quizzes/${id}`);
     promise.then(postQuizz);
@@ -410,32 +421,31 @@ function setUserQuizz(myQuizz, key) {
 
 function initializeLocalStorage() {
     let arr = [];
-    localStorage.setItem("id", JSON.stringify(arr));
-    localStorage.setItem("key", JSON.stringify(arr));
+    const userId = JSON.parse(localStorage.getItem("id"));
+    if (userId == null) {
+        localStorage.setItem("id", JSON.stringify(arr));
+        localStorage.setItem("key", JSON.stringify(arr));
+    }
 }
 
-function removeQuizz(id) {
+function removeQuizz(quizz) {
     const userId = JSON.parse(localStorage.getItem("id"));
     const userkey = JSON.parse(localStorage.getItem("key"));
     let mykey;
     
-    for (let i = 0; userId.length; i++) {
-        if (userId[i] === quizz.id) {
+    for (let i = 0; i < userId.length; i++) {
+        if (userId[i] == quizz) {
             mykey = userkey[i];
+            console.log(mykey)
         }
     }
-    axios.delete(`${API}/quizzes/${id}`, {
+    axios.delete(`${API}/quizzes/${quizz}`, {
         headers: {
             "Secret-Key": mykey
         }
     });
-    //axios.delete(url, quizz, { headers: "Secret-Key" = "seu key" })
-    // axios.delete(`https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes/1944}`,  {
-    //     headers: {
-    //         "Secret-Key": "580a9b01-ae4b-4e37-81cc-92bafb223103"
-    //     }
-    // });
+    //home();
 }
 
-//removeQuizz(1959)
+initializeLocalStorage();
 getQuizzes(postQuizzes);
