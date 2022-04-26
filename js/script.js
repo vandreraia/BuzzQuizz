@@ -231,7 +231,7 @@ function postQuizzes(response) {
     const userId = JSON.parse(localStorage.getItem("id"));
     let element = document.querySelector(".todos-quizzes");
     //element.innerHTML = "";
-    if (userId.length > 0) {
+    if (userId.length > 1) {
         document.querySelector(".user-quizzes-container").classList.remove("hide")
         document.querySelector(".user-quizz").classList.add("hide")
     } else {
