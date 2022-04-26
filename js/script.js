@@ -53,14 +53,14 @@ function criarPerguntas(numPerguntasQuizz) {
     for (let i = 1; i <= numPerguntasQuizz; i++) {
         container.innerHTML += `
         <div class="container flex-center flex-collumn perguntaContainer">
-            <h3>Pergunta ${i}<ion-icon class="create" name="create-outline"></ion-icon></h3>
+            <h3 class="flex-center">Pergunta ${i}<ion-icon class="create" name="create-outline"></ion-icon></h3>
             <input type="text" placeholder="Texto da pergunta" data-identifier="question"/>
             <input type="text" placeholder="Cor de fundo da pergunta" data-identifier="question"/>
-            <h3>Resposta correta</h3>
+            <h3 class="flex-center">Resposta correta</h3>
             <input type="text" placeholder="Resposta correta" data-identifier="question"/>
             <input type="text" placeholder="URL da imagem" data-identifier="question"/>
             
-            <h3>Respostas Incorretas</h3>
+            <h3 class="flex-center">Respostas Incorretas</h3> 
             <input class="input" type="text" placeholder="Resposta incorreta 1" data-identifier="question"/>
             <input class="input" type="text" placeholder="URL da imagem 1" data-identifier="question"/>
             <input class="input" type="text" placeholder="Resposta incorreta 2" data-identifier="question"/>
@@ -142,7 +142,7 @@ function criarNiveis(qtddLevels) {
     for (let i = 1; i <= qtddLevels; i++) {
         containerLevels.innerHTML += `
         <div class="container flex-center flex-collumn levelContainer">        
-            <h3>Nível ${i}<ion-icon class="create" name="create-outline"></ion-icon></h3>
+            <h3 class="flex-center">Nível ${i}<ion-icon class="create" name="create-outline"></ion-icon></h3>
             <input type="text" placeholder="Título do nível" data-identifier="level"/>
             <input type="text" class="porcentagemAcerto" placeholder="% de acerto mínima" data-identifier="level"/>
             <input type="text" placeholder="URL da imagem do nível" data-identifier="level"/>
