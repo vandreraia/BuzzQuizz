@@ -154,15 +154,10 @@ function criarNiveis(qtddLevels) {
 
 function uploadQuizz() {
     const promise = axios.post(`${API}/quizzes`, obj);
-    promise.then(getKey);
+    promise.then(getUserQuizz);
     promise.catch(function () {
         console.log("uploadQuizz error");
     });
-}
-
-function getKey(response) {
-    test = response;
-    console.log(response.data.key);
 }
 
 function finalizar() {
@@ -200,17 +195,17 @@ function finalizar() {
         niveisValidados = 0;
         verificarPorcentagem = 0;
         uploadQuizz();
-        getLastQuizz();
     } else {
         obj.levels = [];
         niveisValidados = 0;
     }
 }
 
-function getLastQuizz (response) {
+function getUserQuizz (response) {
     const quizzes = response.data;
+    const key = response.data.key
     const quizzNow = quizzes[0];
-
+    test = quizzNow;
     const addHTML = document.querySelector(".final");
     addHTML.innerHTML = `
     <h3>Seu quizz está pronto!</h3>
@@ -220,6 +215,8 @@ function getLastQuizz (response) {
     </div>
     <div class="button-final flex-center" onclick="acessarQuizz(${quizzNow.id})">Acessar Quizz</div>
     <a onclick="home()">Voltar pra home</a> `
+
+    setUserQuizz(quizzNow, key);
 }
 
 function getQuizzes(func) {
@@ -399,21 +396,23 @@ function criarQuizz() {
     document.querySelector("main").classList.add("hide");
     document.querySelector(".info-quizz").classList.remove("hide");
 }
-//Chamar no final da criação do quizz
-function setUserQuizz(response) {
-    const quizzes = response.data;
-    test = quizzes;
+
+function setUserQuizz(myQuizz, key) {
     const userId = JSON.parse(localStorage.getItem("id"));
+    const userkey = JSON.parse(localStorage.getItem("key"));
     if (userId == null) {
         initializeLocalStorage();
     }
-    userId.push(quizzes[0].id);
+    userId.push(myQuizz.id);
+    userkey.push(key);
     localStorage.setItem("id", JSON.stringify(userId));
+    localStorage.setItem("key", JSON.stringify(userkey));
 }
 
 function initializeLocalStorage() {
     let arr = [];
     localStorage.setItem("id", JSON.stringify(arr));
+    localStorage.setItem("key", JSON.stringify(arr));
 }
 
 function removeQuizz(id) {
@@ -423,8 +422,6 @@ function removeQuizz(id) {
         }
     });
     //axios.delete(url, quizz, { headers: "Secret-Key" = "seu key" })
-
 }
-//initializeLocalStorage(); //deletar depois de finalizar criar quizz
-getQuizzes(getLastQuizz);
+
 getQuizzes(postQuizzes);
