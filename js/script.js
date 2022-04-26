@@ -204,8 +204,7 @@ function finalizar() {
 function getUserQuizz (response) {
     const quizzes = response.data;
     const key = response.data.key
-    const quizzNow = quizzes[0];
-    test = quizzNow;
+    const quizzNow = quizzes;
     const addHTML = document.querySelector(".final");
     addHTML.innerHTML = `
     <h3>Seu quizz está pronto!</h3>
@@ -416,12 +415,27 @@ function initializeLocalStorage() {
 }
 
 function removeQuizz(id) {
+    const userId = JSON.parse(localStorage.getItem("id"));
+    const userkey = JSON.parse(localStorage.getItem("key"));
+    let mykey;
+    
+    for (let i = 0; userId.length; i++) {
+        if (userId[i] === quizz.id) {
+            mykey = userkey[i];
+        }
+    }
     axios.delete(`${API}/quizzes/${id}`, {
         headers: {
-            "Secret-Key": authorizationToken
+            "Secret-Key": mykey
         }
     });
     //axios.delete(url, quizz, { headers: "Secret-Key" = "seu key" })
+    // axios.delete(`https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes/1944}`,  {
+    //     headers: {
+    //         "Secret-Key": "580a9b01-ae4b-4e37-81cc-92bafb223103"
+    //     }
+    // });
 }
 
+//removeQuizz(1959)
 getQuizzes(postQuizzes);
