@@ -238,9 +238,11 @@ function postQuizzes(response) {
         document.querySelector(".user-quizzes-container").classList.add("hide")
         document.querySelector(".user-quizz").classList.remove("hide")
     }
+    test = quizzes;
     for (let i = 0; i < quizzes.length; i++) {
         for (let j = 0; j < userId.length; j++) {
             if (quizzes[i].id === userId[j]) {
+                console.log("a")
                 element = document.querySelector(".user-quizzes");
                 element.innerHTML += `
                 <div class="quizz">
@@ -420,7 +422,7 @@ function setUserQuizz(myQuizz, key) {
 }
 
 function initializeLocalStorage() {
-    let arr = [];
+    let arr = [1];
     const userId = JSON.parse(localStorage.getItem("id"));
     if (userId == null) {
         localStorage.setItem("id", JSON.stringify(arr));
@@ -446,6 +448,5 @@ function removeQuizz(quizz) {
     });
     //home();
 }
-
 initializeLocalStorage();
 getQuizzes(postQuizzes);
